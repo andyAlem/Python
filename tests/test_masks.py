@@ -1,6 +1,6 @@
 import pytest
 from src.masks import get_mask_account, get_mask_card_number
-from tests.conftest import card_number_empty
+from tests.conftest import card_number_empty, card_nonstandard_cards
 
 
 @pytest.mark.parametrize("card_number, expected",
@@ -19,3 +19,6 @@ def test_get_mask_card_number(card_number, expected):
 def test_get_mask_card_number_empty(card_number_empty):
     """Проверка, что функция корректно обрабатывает входные строки, где отсутствует номер карты."""
     assert get_mask_card_number(card_number_empty)
+
+def test_get_mask_card_number_nonstandard(card_nonstandard_cards):
+    assert get_mask_card_number(card_nonstandard_cards)
