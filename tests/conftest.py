@@ -39,3 +39,12 @@ def list_of_dicts():
 @pytest.fixture
 def invalid_list():
     return ["invalid_str_for_test"]
+
+@pytest.fixture
+def list_of_dicts_with_same_dates():
+    return [
+        {"id": 41428829, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
+        {"id": 939719570, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
+        {"id": 594226727, "state": "CANCELED", "date": "2019-07-03T18:35:29.512364"},
+        {"id": 615064591, "state": "CANCELED", "date": "2019-07-03T18:35:29.512364"},
+    ]
