@@ -23,7 +23,7 @@ def test_get_mask_card_number_empty(card_number_empty):
 
 
 def test_get_mask_card_number_nonstandard(nonstandard_cards):
-    """""Проверка, функции на нестандартные карты"""
+    """ ""Проверка, функции на нестандартные карты"""
     assert get_mask_card_number(nonstandard_cards)
 
 
@@ -46,5 +46,5 @@ def test_get_mask_account_empty(mask_account_empty):
 
 
 def test_get_mask_account_number_nonstandard(nonstandard_accounts):
-    """""Проверка, функции на нестандартные аккаунты"""
+    """ ""Проверка, функции на нестандартные аккаунты"""
     assert get_mask_card_number(nonstandard_accounts)
