@@ -23,8 +23,3 @@ def sort_by_date(dictionaries_to_sort: list, reverse_sorted: bool = True) -> lis
     """Функция возвращает список словарей, отсортированный по дате."""
 
     return sorted(dictionaries_to_sort, key=lambda x: x["date"], reverse=reverse_sorted)
-
-
-if __name__ == "__main__":
-    print(filter_by_state(dictionaries_to_filter))
-    print(sort_by_date(dictionaries_to_sort))
