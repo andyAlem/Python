@@ -48,3 +48,11 @@ def list_of_dicts_with_same_dates():
         {"id": 594226727, "state": "CANCELED", "date": "2019-07-03T18:35:29.512364"},
         {"id": 615064591, "state": "CANCELED", "date": "2019-07-03T18:35:29.512364"},
     ]
+
+@pytest.fixture
+def inputs_mask_account():
+    return "Счет 64686473678894779589"
+
+@pytest.fixture
+def inputs_mask_account_card():
+    return "Visa Platinum 7000792289606361"
