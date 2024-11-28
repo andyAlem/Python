@@ -13,5 +13,7 @@ def mask_account_card(cards_accounts_data: str) -> str:
 
 def get_date(date: str) -> str:
     """Функция, которая изменяет дату в нужном формате"""
+    if len(date) != 26:
+        raise ValueError("Неверный ввод, проверьте количество символов")
 
     return f"{(date[8:10])}.{(date[5:7])}.{(date[0:4])}"
