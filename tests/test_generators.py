@@ -1,7 +1,6 @@
 import pytest
 
-from src.generators import (card_number_generator, filter_by_currency,
-                            transaction_descriptions)
+from src.generators import card_number_generator, filter_by_currency, transaction_descriptions
 
 
 @pytest.mark.parametrize(
@@ -145,4 +144,4 @@ def test_card_number_generator_range_invalid():
     """Тестирование с диапазоном больше заданного предела"""
 
     with pytest.raises(ValueError, match="Некорректный диапазон"):
-        list(card_number_generator(10000000000000000, 10000000000000001))  # больше 9999_9999_9999_9999
+        list(card_number_generator(10000000000000000, 10000000000000001))
