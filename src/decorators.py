@@ -7,7 +7,7 @@ def log(filename:None)
         def wrapper(*args, **kwargs):
             try:
                 result = func(*args, **kwargs)
-                log_message = 'my_function ok'
+                log_message = 'my_function is ok'
                 print(log_message)
                 if filename:
                     with open(filename, "a") as file:
