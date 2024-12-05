@@ -6,3 +6,7 @@ my_function Error: unsupported operand type(s) for +: 'int' and 'str'. Inputs: (
 my_function started: 2024-12-05 20:31:35 *:(2, 'Hello, World!'), **:{}
 my_function Error: unsupported operand type(s) for +: 'int' and 'str'. Inputs: (2, 'Hello, World!'), {}
 my_function Error: unsupported operand type(s) for +: 'int' and 'str'. Inputs: (2, 'Hello, World!'), {}
+my_function started: 2024-12-05 21:08:23 *:(1, 2), **:{}
+my_function is ok
+my_function started: 2024-12-05 21:09:17 *:(1, 2), **:{}
+my_function is ok
