@@ -52,3 +52,24 @@ my_function is ok
 my_function started: 2024-12-05 21:25:04 *:(2, 'Test'), **:{}
 my_function Error: unsupported operand type(s) for +: 'int' and 'str'. Inputs: (2, 'Test'), {}
 my_function Error: unsupported operand type(s) for +: 'int' and 'str'. Inputs: (2, 'Test'), {}
+my_function started: 2024-12-05 21:29:11 *:(1, 2), **:{}
+my_function is ok
+my_function started: 2024-12-05 21:29:11 *:(1, 2), **:{}
+my_function is ok
+my_function started: 2024-12-05 21:29:11 *:(2, 'Test'), **:{}
+my_function Error: unsupported operand type(s) for +: 'int' and 'str'. Inputs: (2, 'Test'), {}
+my_function Error: unsupported operand type(s) for +: 'int' and 'str'. Inputs: (2, 'Test'), {}
+my_function started: 2024-12-05 21:29:17 *:(1, 2), **:{}
+my_function is ok
+my_function started: 2024-12-05 21:29:17 *:(1, 2), **:{}
+my_function is ok
+my_function started: 2024-12-05 21:29:17 *:(2, 'Test'), **:{}
+my_function Error: unsupported operand type(s) for +: 'int' and 'str'. Inputs: (2, 'Test'), {}
+my_function Error: unsupported operand type(s) for +: 'int' and 'str'. Inputs: (2, 'Test'), {}
+my_function started: 2024-12-05 21:29:34 *:(1, 2), **:{}
+my_function is ok
+my_function started: 2024-12-05 21:29:34 *:(1, 2), **:{}
+my_function is ok
+my_function started: 2024-12-05 21:29:34 *:(2, 'Test'), **:{}
+my_function Error: unsupported operand type(s) for +: 'int' and 'str'. Inputs: (2, 'Test'), {}
+my_function Error: unsupported operand type(s) for +: 'int' and 'str'. Inputs: (2, 'Test'), {}
