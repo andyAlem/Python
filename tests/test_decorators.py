@@ -14,6 +14,11 @@ def test_decorator(capsys):
     assert "my_function is ok" in captured.out
 
     try:
+        my_function(1, 2)
+    except():
+        assert 3
+
+    try:
         my_function(2, "Test")
     except TypeError:
         captured = capsys.readouterr()
