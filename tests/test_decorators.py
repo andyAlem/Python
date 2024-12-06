@@ -17,6 +17,10 @@ def test_decorator(capsys):
     assert "my_function is ok" in captured.out
     assert "my_function finished" in captured.out
 
+    with open("mylog.txt", "r") as file:
+        log_content = file.read()
+        assert "faulty_function started" in log_content
+
 
 def test_decorator_error(capsys):
     """Тестируем обработку исключений"""
