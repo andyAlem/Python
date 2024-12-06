@@ -32,7 +32,7 @@ def log(filename=None):
                     with open(filename, "a") as file:
                         file.write(log_message + "\n")
                 raise
-            finally:                                #https://sky.pro/media/zachem-nuzhna-konstrukcziya-finally-v-python/
+            finally:  # https://sky.pro/media/zachem-nuzhna-konstrukcziya-finally-v-python/
                 end_time = time.time()
                 time_for_work = end_time - start_time
                 time_for_work_info = (

@@ -25,7 +25,7 @@ def test_decorator(capsys):
 def test_decorator_error(capsys):
     """Тестируем обработку исключений"""
 
-    @log(filename='mylog.txt')
+    @log(filename="mylog.txt")
     def faulty_function(x, y):
         return x / y
 
@@ -37,6 +37,3 @@ def test_decorator_error(capsys):
     assert "faulty_function Error:" in captured.out
     assert "Inputs: (1, 0)" in captured.out
     assert "faulty_function finished" in captured.out
-
-
-
