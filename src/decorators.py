@@ -31,6 +31,7 @@ def log(filename=None):
                 if filename:
                     with open(filename, "a") as file:
                         file.write(log_message + "\n")
+            finally:                                #https://sky.pro/media/zachem-nuzhna-konstrukcziya-finally-v-python/
                 end_time = time.time()
                 time_for_work = end_time - start_time
                 time_for_work_info = (
