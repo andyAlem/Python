@@ -1,4 +1,5 @@
 from src.decorators import log
+import pytest
 
 
 def test_decorator(capsys):
@@ -15,6 +16,23 @@ def test_decorator(capsys):
     assert "my_function started" in captured.out
     assert "my_function is ok" in captured.out
     assert "my_function finished" in captured.out
+
+
+def test_decorator_error(capsys):
+    """Тестируем обработку исключений"""
+
+    @log(filename='mylog.txt')
+    def faulty_function(x, y):
+        return x / y
+
+    with pytest.raises(ZeroDivisionError):
+        faulty_function(1, 0)
+
+    captured = capsys.readouterr()
+    assert "faulty_function started" in captured.out
+    assert "faulty_function Error:" in captured.out
+    assert "Inputs: (1, 0)" in captured.out
+    assert "faulty_function finished" in captured.out
 
 
 
