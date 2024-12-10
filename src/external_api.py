@@ -17,11 +17,11 @@ def convert_to_rub(amount, currency):
     headers = {"apikey": API_KEY}
     try:
         response = requests.get(url, headers=headers, params=params)
-        data = response.json()
-        return data.get("result", 0.0)
+        result = response.json()
+        return result.get("result", 0.0) #float
     except RequestException:
         return 0
 
 
-if __name__ == "__main__":
-    print(convert_to_rub(100, "EUR"))
+#if __name__ == "__main__":
+#    print(convert_to_rub(100, "EUR"))
