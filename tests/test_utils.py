@@ -1,10 +1,9 @@
 from src.utils import get_transactions
 
 
-def test_get_transactions_operations_list():
+def test_get_transactions_operations(path_to_file):
     """Тестирует корректность обработки operations.json, сравниваем с первым элементом"""
-    operations_path = "/home/andrej/Poetry_homework/Homework_2.10-1_Git/data/operations.json"
-    result = get_transactions(operations_path)
+    result = get_transactions(path_to_file)
     assert result[0] == {
         "id": 441945886,
         "state": "EXECUTED",
@@ -17,4 +16,11 @@ def test_get_transactions_operations_list():
         "from": "Maestro 1596837868705199",
         "to": "Счет 64686473678894779589",
     }
+
+
+def test_get_transactions_path_error(path_is_not_valid):
+    """Тестируем функцию, если указан неверный путь к файлу"""
+    assert get_transactions(path_is_not_valid) == []
+
+
 
