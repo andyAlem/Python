@@ -18,7 +18,7 @@ def get_transactions(path):
         return []
 
 
-def transactions_amount_in_rub(transactions, transaction_id, convert_to_rub):
+def transactions_amount_in_rub(transactions, transaction_id):
 
     for transaction in transactions:
         try:
@@ -43,4 +43,4 @@ def transactions_amount_in_rub(transactions, transaction_id, convert_to_rub):
 
 if __name__ == "__main__":
     transactions = get_transactions("../data/operations.json")
-    print(transactions_amount_in_rub(transactions, 970724427))
+    print(transactions_amount_in_rub(transactions, 811920303))
