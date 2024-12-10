@@ -10,7 +10,7 @@ API_KEY = os.getenv("API_KEY")
 
 def convert_to_rub(amount, currency):
     if currency not in {"EUR", "USD"}:
-        raise ValueError("We could not convert EUR or USD")
+        raise ValueError("We could convert only EUR or USD")
 
     url = "https://api.apilayer.com/exchangerates_data/convert"
     params = {"to": "RUB", "from": currency, "amount": amount}
