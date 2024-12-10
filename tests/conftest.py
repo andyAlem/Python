@@ -1,4 +1,5 @@
 import pytest
+from src.utils import get_transactions
 
 
 @pytest.fixture
@@ -122,8 +123,12 @@ def transactions():
 
 @pytest.fixture
 def path_to_file():
-    return "/home/andrej/Poetry_homework/Homework_2.10-1_Git/data/operations.json"
+    return "data/operations.json"
 
 @pytest.fixture
 def path_is_not_valid():
     return "/home/andrej/data/operations.json"
+
+@pytest.fixture
+def get_transactions_data(path_to_file):
+    return get_transactions(path_to_file)
