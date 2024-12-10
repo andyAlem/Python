@@ -9,6 +9,7 @@ API_KEY = os.getenv("API_KEY")
 
 
 def convert_to_rub(amount, currency):
+    """Функцию конвертации в рубли"""
     if currency not in {"EUR", "USD"}:
         raise ValueError("We could convert only EUR or USD")
 

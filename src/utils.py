@@ -21,7 +21,7 @@ def get_transactions(path):
 
 
 def transactions_amount_in_rub(transactions, transaction_id):
-    """Функция, которая принимает на вход транзакцию и возвращает сумму транзакции (amount) в рублях"""
+    """Функция, которая принимает на вход транзакцию и возвращает сумму транзакции (amounttest) в рублях"""
     for transaction in transactions:
         try:
             if transaction.get("id") == transaction_id:

@@ -117,3 +117,10 @@ def transactions():
             "to": "Счет 14211924144426031657",
         },
     ]
+
+
+
+@pytest.fixture
+def get_path():
+    return "/home/andrej/Poetry_homework/Homework_2.10-1_Git/data/operations.json"
+
