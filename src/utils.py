@@ -1,25 +1,27 @@
 import json
 from json import JSONDecodeError
+
 from src.external_api import convert_to_rub
+
 
 def get_transactions(path):
     """Функция принимает на вход путь до JSON-файла
-     и возвращает список словарей с данными о финансовых транзакциях."""
+    и возвращает список словарей с данными о финансовых транзакциях."""
     try:
-        with open(path, encoding='utf-8') as f:
+        with open(path, encoding="utf-8") as f:
             try:
                 data_json = json.load(f)
             except JSONDecodeError:
-                print('Error decoding')
+                print("Error decoding")
                 return []
         return data_json
     except FileNotFoundError:
-        print('File not found')
+        print("File not found")
         return []
 
 
 def transactions_amount_in_rub(transactions, transaction_id):
-
+    """Функция, которая принимает на вход транзакцию и возвращает сумму транзакции (amount) в рублях"""
     for transaction in transactions:
         try:
             if transaction.get("id") == transaction_id:
@@ -40,6 +42,7 @@ def transactions_amount_in_rub(transactions, transaction_id):
             return f"Error: Value is not correct {e}"
 
     return "Transaction not found"
+
 
 if __name__ == "__main__":
     transactions = get_transactions("../data/operations.json")
