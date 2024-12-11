@@ -1,36 +1,36 @@
-import os
 import json
+import os
+from unittest.mock import mock_open, patch
+
 import pytest
+
 from src.utils import get_transactions, transaction_amount_in_rub
-from unittest.mock import patch, mock_open
 
 
 def test_get_transactions(mock_data):
     """Тест на успешную загрузку операций из файла json. Используем фикстуру mock_data"""
-    with patch("builtins.open", mock_open(read_data=mock_data)): #https://docs.python.org/3/library/unittest.mock.html
+    with patch(
+        "builtins.open", mock_open(read_data=mock_data)
+    ):  # https://docs.python.org/3/library/unittest.mock.html
         result = get_transactions("hier_should_be_path_.json")
     assert result == [
         {
             "id": 441945886,
             "state": "EXECUTED",
             "date": "2019-08-26T10:50:58.294041",
-            "operationAmount": {
-                "amount": "31957.58",
-                "currency": {
-                    "name": "руб.",
-                    "code": "RUB"
-                }
-            },
+            "operationAmount": {"amount": "31957.58", "currency": {"name": "руб.", "code": "RUB"}},
             "description": "Перевод организации",
             "from": "Maestro 1596837868705199",
-            "to": "Счет 64686473678894779589"
+            "to": "Счет 64686473678894779589",
         }
     ]
 
 
 def test_get_transactions_file_not_found():
     """Файл отсутствует"""
-    with patch("builtins.open", side_effect=FileNotFoundError): #https://docs.python.org/3/library/unittest.mock.html#unittest.mock.patch
+    with patch(
+        "builtins.open", side_effect=FileNotFoundError
+    ):  # https://docs.python.org/3/library/unittest.mock.html#unittest.mock.patch
         result = get_transactions("file_does_not_exist.json")
     assert result == []
 
@@ -49,11 +49,13 @@ def test_transaction_amount_in_rub_with_rub(transactions_for_test):
     result = transaction_amount_in_rub(transactions, 441945886)
     assert result == 31957.58
 
+
 def test_transaction_amount_in_rub_transaction_not_found(transactions_for_test):
     """Транзакция отсутствует"""
     transactions = transactions_for_test
     result = transaction_amount_in_rub(transactions, 7009)
     assert result == "Tранзакция не найдена"
+
 
 @patch("src.external_api.convert_to_rub", side_effect=Exception("API Error"))
 def test_transaction_amount_in_rub_conversion_error(mock_convert_to_rub, transactions_for_test):
@@ -70,12 +72,10 @@ def test_transaction_amount_in_rub_with_usd_currency(mock_convert_to_rub, transa
     print(f"Testing transaction with ID 41428829:")
     print(f"Transactions: {transactions}")
 
-    result = transaction_amount_in_rub(transactions, 41428829)  # id транзакции с валютой "USD"
+    result = transaction_amount_in_rub(transactions, 41428829)
 
     print(f"Result: {result}")
 
     mock_convert_to_rub.assert_called_once_with(8221.37, "USD")
 
     assert result == 895
-
-

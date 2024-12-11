@@ -1,4 +1,5 @@
 import pytest
+
 from src.utils import get_transactions
 
 
@@ -120,18 +121,20 @@ def transactions():
     ]
 
 
-
 @pytest.fixture
 def path_to_file():
     return "data/operations.json"
+
 
 @pytest.fixture
 def path_is_not_valid():
     return "/home/andrej/data/operations.json"
 
+
 @pytest.fixture
 def get_transactions_data(path_to_file):
     return get_transactions(path_to_file)
+
 
 @pytest.fixture
 def transactions_for_test():
@@ -141,31 +144,26 @@ def transactions_for_test():
             "id": 41428829,
             "state": "EXECUTED",
             "date": "2019-07-03T18:35:29.512364",
-            "operationAmount": {
-                "amount": "8221.37",
-                "currency": {"code": "USD"}
-            },
+            "operationAmount": {"amount": "8221.37", "currency": {"code": "USD"}},
             "description": "Перевод организации",
             "from": "MasterCard 7158300734726758",
-            "to": "Счет 35383033474447895560"
+            "to": "Счет 35383033474447895560",
         },
         {
             "id": 441945886,
             "state": "EXECUTED",
             "date": "2019-08-26T10:50:58.294041",
-            "operationAmount": {
-                "amount": "31957.58",
-                "currency": {"code": "RUB"}
-            },
+            "operationAmount": {"amount": "31957.58", "currency": {"code": "RUB"}},
             "description": "Перевод организации",
             "from": "Maestro 1596837868705199",
-            "to": "Счет 64686473678894779589"
-        }
+            "to": "Счет 64686473678894779589",
+        },
     ]
+
 
 @pytest.fixture
 def mock_data():
-    return '''
+    return """
     [
         {
             "id": 441945886,
@@ -183,4 +181,4 @@ def mock_data():
             "to": "Счет 64686473678894779589"
         }
     ]
-    '''
+    """
