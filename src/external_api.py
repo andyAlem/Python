@@ -8,3 +8,28 @@ load_dotenv("../.env")
 API_KEY = os.getenv("API_KEY")
 
 
+def convert_to_rub(amount: float, currency: str):
+    if currency not in {"USD", "EUR"}:
+        raise ValueError("Валюта не поддерживается.")
+
+    url = f"https://api.apilayer.com/exchangerates_data/convert?to=RUB&from={currency}&amount={amount}"
+    headers = {"apikey": API_KEY}
+
+    try:
+        response = requests.get(url, headers=headers)
+        response.raise_for_status()
+        json_result = response.json()
+
+        if "result" in json_result:
+            return json_result["result"]
+        else:
+            raise ValueError("Ошибка ответа API")
+    except RequestException as e:
+        print(f"Request failed: {e}")
+        return 0
+
+#if __name__ == "__main__":
+#    try:
+#        print(convert_to_rub(3555, "test"))
+#    except Exception as e:
+#        print(f"Error: {e}")
