@@ -132,3 +132,24 @@ def path_is_not_valid():
 @pytest.fixture
 def get_transactions_data(path_to_file):
     return get_transactions(path_to_file)
+
+@pytest.fixture
+def transactions_for_test():
+    """Пример реальных транзакций для тестов"""
+    return [
+        {
+            "id": 41428829,
+            "state": "EXECUTED",
+            "date": "2019-07-03T18:35:29.512364",
+            "operationAmount": {
+                "amount": "8221.37",  # Значение как строка
+                "currency": {
+                    "name": "USD",
+                    "code": "USD"
+                }
+            },
+            "description": "Перевод организации",
+            "from": "MasterCard 7158300734726758",
+            "to": "Счет 35383033474447895560"
+        }
+    ]
