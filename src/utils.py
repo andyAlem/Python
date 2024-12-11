@@ -1,5 +1,7 @@
 import json
+
 from src.external_api import convert_to_rub
+
 
 def get_transactions(path):
     try:
@@ -14,7 +16,9 @@ def get_transactions(path):
         return []
 
 
-def transaction_amount_in_rub(transactions, transaction_id): #https://sky.pro/media/ispolzovanie-dict-getkey-vmesto-dictkey-v-python/
+def transaction_amount_in_rub(
+    transactions, transaction_id
+):  # https://sky.pro/media/ispolzovanie-dict-getkey-vmesto-dictkey-v-python/
 
     for transaction in transactions:
         if transaction.get("id") == transaction_id:

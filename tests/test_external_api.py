@@ -1,5 +1,6 @@
-import pytest
 from unittest.mock import patch
+
+import pytest
 
 from src.external_api import convert_to_rub
 
@@ -33,6 +34,10 @@ def test_convert_to_rub_success(mock_get, amount, currency, mock_result, expecte
     mock_get.assert_called_once()
 
 
+def test_convert_to_rub_invalid_currency():
+    """Тестируем не корректную валюту"""
+    with pytest.raises(ValueError, match="Валюта не поддерживается"):
+        convert_to_rub(11, "FRK")
 
 
 

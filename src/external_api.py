@@ -27,6 +27,7 @@ def convert_to_rub(amount: float, currency: str):
     except (RequestException, ValueError, KeyError):
         return 0
 
+
 if __name__ == "__main__":
     try:
         print(convert_to_rub(3555, "EUR"))
