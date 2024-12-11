@@ -25,11 +25,11 @@ def convert_to_rub(amount: float, currency: str):
         else:
             return 0
     except (RequestException, ValueError, KeyError):
-        return 0
+        return "Конвертация невозможна"
 
 
 if __name__ == "__main__":
     try:
-        print(convert_to_rub(3555, "EUR"))
+        print(convert_to_rub(8221.37, "USD"))
     except Exception as e:
         print(f"Error: {e}")

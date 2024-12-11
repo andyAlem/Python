@@ -1,11 +1,12 @@
 import os
 import json
-from src.utils import get_transactions
+import pytest
+from src.utils import get_transactions, transaction_amount_in_rub
 from unittest.mock import patch, mock_open
 
 
 def test_get_transactions(mock_data):
-    """Тест на успешную загрузку операций из файла json"""
+    """Тест на успешную загрузку операций из файла json. Используем фикстуру mock_data"""
     with patch("builtins.open", mock_open(read_data=mock_data)): #https://docs.python.org/3/library/unittest.mock.html
         result = get_transactions("hier_should_be_path_.json")
     assert result == [
@@ -39,6 +40,26 @@ def test_transactions_file_invalid_json():
     with patch("builtins.open", mock_open(read_data="Currepted JSON")):
         result = get_transactions("path_to_file.json")
     assert result == []
+
+
+#############
+def test_transaction_amount_in_rub_with_rub(transactions_for_test):
+    """Тестируем обработку транзакции в рублях. Не должно быть конвертации"""
+    transactions = transactions_for_test
+    result = transaction_amount_in_rub(transactions, 441945886)
+    assert result == 31957.58
+
+def test_transaction_amount_in_rub_transaction_not_found(transactions_for_test):
+    transactions = transactions_for_test
+    result = transaction_amount_in_rub(transactions, 7009)
+    assert result == "Tранзакция не найдена"
+
+@patch("src.external_api.convert_to_rub", side_effect=Exception("API Error"))
+def test_transaction_amount_in_rub_conversion_error(mock_convert_to_rub, transactions_for_test):
+    """Тест на ошибку API"""
+    transactions = transactions_for_test
+    result = transaction_amount_in_rub(transactions, 41428829)
+    assert result == "Конвертация невозможна"
 
 
 

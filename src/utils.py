@@ -26,6 +26,8 @@ def transaction_amount_in_rub(
             amount = operation_amount.get("amount")
             currency = operation_amount.get("currency", {}).get("code")
 
+            print(f"Found transaction: {transaction}")
+
             if not amount or not currency:
                 return "Ввод недействительный"
 
@@ -34,6 +36,7 @@ def transaction_amount_in_rub(
             else:
                 try:
                     converted_amount = convert_to_rub(float(amount), currency)
+                    print(f"Converted amount: {converted_amount}")
                     return round(converted_amount, 2)
                 except Exception as e:
                     print(f"Ошибка конвертации: {e}")
