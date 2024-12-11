@@ -25,7 +25,7 @@ def convert_to_rub(amount: float, currency: str):
         else:
             return 0
     except (RequestException, ValueError, KeyError):
-        return "Конвертация невозможна"
+        return 0
 
 
 if __name__ == "__main__":

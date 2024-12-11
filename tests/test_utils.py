@@ -50,6 +50,7 @@ def test_transaction_amount_in_rub_with_rub(transactions_for_test):
     assert result == 31957.58
 
 def test_transaction_amount_in_rub_transaction_not_found(transactions_for_test):
+    """Транзакция отсутствует"""
     transactions = transactions_for_test
     result = transaction_amount_in_rub(transactions, 7009)
     assert result == "Tранзакция не найдена"
@@ -62,5 +63,19 @@ def test_transaction_amount_in_rub_conversion_error(mock_convert_to_rub, transac
     assert result == "Конвертация невозможна"
 
 
+@patch("src.utils.convert_to_rub", return_value=895)
+def test_transaction_amount_in_rub_with_usd_currency(mock_convert_to_rub, transactions_for_test):
+    transactions = transactions_for_test
+
+    print(f"Testing transaction with ID 41428829:")
+    print(f"Transactions: {transactions}")
+
+    result = transaction_amount_in_rub(transactions, 41428829)  # id транзакции с валютой "USD"
+
+    print(f"Result: {result}")
+
+    mock_convert_to_rub.assert_called_once_with(8221.37, "USD")
+
+    assert result == 895
 
 
