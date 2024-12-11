@@ -26,8 +26,6 @@ def transaction_amount_in_rub(
             amount = operation_amount.get("amount")
             currency = operation_amount.get("currency", {}).get("code")
 
-            print(f"Found transaction: {transaction}")
-
             if not amount or not currency:
                 return "Ввод недействительный"
 
@@ -37,7 +35,11 @@ def transaction_amount_in_rub(
                 try:
                     converted_amount = convert_to_rub(float(amount), currency)
                     print(f"Converted amount: {converted_amount}")
-                    return round(converted_amount, 2)
+
+                    if isinstance(converted_amount, (int, float)):
+                        return round(converted_amount, 2)
+                    else:
+                        return "Конвертация невозможна"
                 except Exception as e:
                     print(f"Ошибка конвертации: {e}")
                     return "Конвертация невозможна"
@@ -46,4 +48,4 @@ def transaction_amount_in_rub(
 
 if __name__ == "__main__":
     transactions = get_transactions("../data/operations.json")
-    print(transaction_amount_in_rub(transactions, 41428829))
+    print(transaction_amount_in_rub(transactions, 441945886))
