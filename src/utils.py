@@ -16,10 +16,7 @@ def get_transactions(path):
         return []
 
 
-def transaction_amount_in_rub(
-    transactions, transaction_id
-):  # https://sky.pro/media/ispolzovanie-dict-getkey-vmesto-dictkey-v-python/
-
+def transaction_amount_in_rub(transactions, transaction_id):
     for transaction in transactions:
         if transaction.get("id") == transaction_id:
             operation_amount = transaction.get("operationAmount", {})
@@ -33,17 +30,19 @@ def transaction_amount_in_rub(
                 return float(amount)
             else:
                 try:
-                    converted_amount = convert_to_rub(float(amount), currency)
+                    converted_amount = convert_to_rub(transaction)
                     print(f"Converted amount: {converted_amount}")
 
                     if converted_amount == 0:
                         return "Конвертация невозможна"
+
+                    return round(converted_amount, 2)
                 except Exception as e:
                     print(f"Ошибка конвертации: {e}")
-                    return round(converted_amount, 2)
+                    return "Конвертация невозможна"
     return "Tранзакция не найдена"
 
 
-if __name__ == "__main__":
-    transactions = get_transactions("../data/operations.json")
-    print(transaction_amount_in_rub(transactions, 441945886))
+#if __name__ == "__main__":
+#    transactions = get_transactions("../data/operations.json")
+#    print(transaction_amount_in_rub(transactions, 441945886))

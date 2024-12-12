@@ -3,8 +3,13 @@
 Программа для фильтрации и сортировки банковских счетов по дате и оплате.
 
 ## Инструкция по установке
-Установить зависимости:
-pip install -r requirements.txt
+
+- Клонируйте репозиторий: git clone https://github.com/andyAlem/Python.git
+- Активировать виртуальное окружение poetry
+- Установить зависимости:
+poetry add --group dev pytest pytest-cov
+poetry add --group lint flake8, black, isort, mypy
+
 
 
 ## Автор работы над заданием:

@@ -4,6 +4,7 @@ from unittest.mock import mock_open, patch
 
 import pytest
 
+from src.external_api import convert_to_rub
 from src.utils import get_transactions, transaction_amount_in_rub
 
 
@@ -65,8 +66,18 @@ def test_transaction_amount_in_rub_conversion_error(mock_convert_to_rub, transac
     assert result == "Конвертация невозможна"
 
 
+@patch("src.utils.convert_to_rub", side_effect=Exception("API Error"))
+def test_transaction_amount_in_rub_conversion_error(mock_convert_to_rub, transactions_for_test):
+    """Тест на обработку исключения при вызове convert_to_rub"""
+
+    result = transaction_amount_in_rub(transactions_for_test, 41428829)
+    assert result == "Конвертация невозможна"
+    mock_convert_to_rub.assert_called_once_with(transactions_for_test[0])
+
+
 @patch("src.utils.convert_to_rub", return_value=895)
 def test_transaction_amount_in_rub_with_usd_currency(mock_convert_to_rub, transactions_for_test):
+    """Тестируем функцию на работу с валютой USD"""
     transactions = transactions_for_test
 
     print(f"Testing transaction with ID 41428829:")
@@ -75,7 +86,9 @@ def test_transaction_amount_in_rub_with_usd_currency(mock_convert_to_rub, transa
     result = transaction_amount_in_rub(transactions, 41428829)
 
     print(f"Result: {result}")
-
     mock_convert_to_rub.assert_called_once_with(transactions[0])
-
     assert result == 895
+
+
+
+
