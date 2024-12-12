@@ -35,8 +35,8 @@ def convert_to_rub(transaction: dict):
         return 0
 
 
-#if __name__ == "__main__":
-    # try:
-    #     print(convert_to_rub(8221.37, "USD"))
-    # except Exception as e:
-    #     print(f"Error: {e}")
+# if __name__ == "__main__":
+# try:
+#     print(convert_to_rub(8221.37, "USD"))
+# except Exception as e:
+#     print(f"Error: {e}")

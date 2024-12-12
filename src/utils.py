@@ -43,6 +43,6 @@ def transaction_amount_in_rub(transactions, transaction_id):
     return "Tранзакция не найдена"
 
 
-#if __name__ == "__main__":
+# if __name__ == "__main__":
 #    transactions = get_transactions("../data/operations.json")
 #    print(transaction_amount_in_rub(transactions, 441945886))

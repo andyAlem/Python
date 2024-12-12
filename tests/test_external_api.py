@@ -10,9 +10,7 @@ def test_convert_to_rub_api_failure(mock_get):
     """Проверяем некорректный API"""
     mock_get.return_value.status_code = 500
 
-    transaction = {
-        "operationAmount": {"amount": "100", "currency": {"code": "USD"}}
-    }
+    transaction = {"operationAmount": {"amount": "100", "currency": {"code": "USD"}}}
     result = convert_to_rub(transaction)
 
     assert result == 0
@@ -27,7 +25,6 @@ def test_convert_to_rub_api_failure(mock_get):
         ({"operationAmount": {"amount": "3", "currency": {"code": "USD"}}}, {"result": 303}, 303),
     ],
 )
-
 @patch("src.external_api.requests.get")
 def test_convert_to_rub_success(mock_get, transaction, mock_result, expected):
     """Тестируем корректную работу функии"""

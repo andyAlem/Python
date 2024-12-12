@@ -88,7 +88,3 @@ def test_transaction_amount_in_rub_with_usd_currency(mock_convert_to_rub, transa
     print(f"Result: {result}")
     mock_convert_to_rub.assert_called_once_with(transactions[0])
     assert result == 895
-
-
-
-
