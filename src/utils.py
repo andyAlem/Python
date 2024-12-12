@@ -32,13 +32,15 @@ def transaction_amount_in_rub(
             if currency == "RUB":
                 return float(amount)
             else:
-                converted_amount = convert_to_rub(float(amount), currency)
-                print(f"Converted amount: {converted_amount}")
+                try:
+                    converted_amount = convert_to_rub(float(amount), currency)
+                    print(f"Converted amount: {converted_amount}")
 
-                if converted_amount == 0:
-                    return "Конвертация невозможна"
-
-                return round(converted_amount, 2)
+                    if converted_amount == 0:
+                        return "Конвертация невозможна"
+                except Exception as e:
+                    print(f"Ошибка конвертации: {e}")
+                    return round(converted_amount, 2)
     return "Tранзакция не найдена"
 
 

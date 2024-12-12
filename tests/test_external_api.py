@@ -10,27 +10,31 @@ def test_convert_to_rub_api_failure(mock_get):
     """Проверяем некорректный API"""
     mock_get.return_value.status_code = 500
 
-    result = convert_to_rub(100, "USD")
+    transaction = {
+        "operationAmount": {"amount": "100", "currency": {"code": "USD"}}
+    }
+    result = convert_to_rub(transaction)
 
     assert result == 0
     mock_get.assert_called_once()
 
 
 @pytest.mark.parametrize(
-    "amount, currency, mock_result, expected",
+    "transaction, mock_result, expected",
     [
-        (1, "USD", {"result": 101}, 101),
-        (2, "EUR", {"result": 202}, 202),
-        (3, "USD", {"result": 303}, 303),
+        ({"operationAmount": {"amount": "1", "currency": {"code": "USD"}}}, {"result": 101}, 101),
+        ({"operationAmount": {"amount": "2", "currency": {"code": "EUR"}}}, {"result": 202}, 202),
+        ({"operationAmount": {"amount": "3", "currency": {"code": "USD"}}}, {"result": 303}, 303),
     ],
 )
+
 @patch("src.external_api.requests.get")
-def test_convert_to_rub_success(mock_get, amount, currency, mock_result, expected):
+def test_convert_to_rub_success(mock_get, transaction, mock_result, expected):
     """Тестируем корректную работу функии"""
     mock_get.return_value.status_code = 200
     mock_get.return_value.json.return_value = mock_result
 
-    result = convert_to_rub(amount, currency)
+    result = convert_to_rub(transaction)
 
     assert result == expected
     mock_get.assert_called_once()
@@ -38,5 +42,6 @@ def test_convert_to_rub_success(mock_get, amount, currency, mock_result, expecte
 
 def test_convert_to_rub_invalid_currency():
     """Тестируем не корректную валюту"""
-    with pytest.raises(ValueError, match="Валюта не поддерживается"):
-        convert_to_rub(11, "FRK")
+    transaction = {"operationAmount": {"amount": "11", "currency": {"code": "FRK"}}}
+    with pytest.raises(ValueError, match="Валюта FRK не поддерживается"):
+        convert_to_rub(transaction)
