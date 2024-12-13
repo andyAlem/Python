@@ -958,3 +958,12 @@ my_function is ok
 faulty_function started: 2024-12-13 09:49:30 *:(1, 0), **:{}
 faulty_function Error: division by zero. Inputs: (1, 0), {}
 faulty_function Error: division by zero. Inputs: (1, 0), {}
+my_function started: 2024-12-13 09:56:08 *:(1, 2), **:{}
+my_function is ok
+my_function is ok
+my_function started: 2024-12-13 09:56:08 *:(1, 2), **:{}
+my_function is ok
+my_function is ok
+faulty_function started: 2024-12-13 09:56:08 *:(1, 0), **:{}
+faulty_function Error: division by zero. Inputs: (1, 0), {}
+faulty_function Error: division by zero. Inputs: (1, 0), {}

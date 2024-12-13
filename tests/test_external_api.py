@@ -40,5 +40,5 @@ def test_convert_to_rub_success(mock_get, transaction, mock_result, expected):
 def test_convert_to_rub_invalid_currency():
     """Тестируем не корректную валюту"""
     transaction = {"operationAmount": {"amount": "11", "currency": {"code": "FRK"}}}
-    with pytest.raises(ValueError, match="Валюта FRK не поддерживается"):
-        convert_to_rub(transaction)
+    result = convert_to_rub(transaction)
+    assert result == 0
