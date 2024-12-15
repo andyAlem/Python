@@ -44,6 +44,8 @@ masks, processing, widget
 
 Добавлено тестирование для модулей utils, external_api
 
+## Logging
+Добавлены логгеры для модулей utils и masks
 
 ## Контакт для связи с командой разработки:
 andrej.osipov@outlook.com
