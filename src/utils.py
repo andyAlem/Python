@@ -1,21 +1,19 @@
 import json
 import logging
-from src.external_api import convert_to_rub
-
 import os.path
+
+from src.external_api import convert_to_rub
 
 os.makedirs("logs", exist_ok=True)
 
-logger = logging.getLogger('utils')
+logger = logging.getLogger("utils")
 logger.setLevel(logging.INFO)
 file_handler = logging.FileHandler(
     os.path.join(os.path.dirname(os.path.abspath(__file__)), "../logs", "utils.log"), mode="w"
 )
-file_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s: %(message)s')
+file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s: %(message)s")
 file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
-
-
 
 
 def get_transactions(path):
@@ -25,13 +23,13 @@ def get_transactions(path):
         with open(path, "r", encoding="utf-8") as data_json:
             return json.load(data_json)
     except FileNotFoundError:
-        logger.info("Ошибка файл не найден")
+        logger.error("Ошибка файл не найден")
         return []
     except json.decoder.JSONDecodeError:
-        logger.info("Ошибка обработки файла")
+        logger.error("Ошибка обработки файла")
         return []
     except Exception as e:
-        logger.info(f"Неизвестная ошибка {e}")
+        logger.error(f"Неизвестная ошибка {e}")
         return []
 
 
@@ -62,12 +60,12 @@ def transaction_amount_in_rub(transactions, transaction_id):
 
                     return round(converted_amount, 2)
                 except Exception as e:
-                    logger.info(f"Ошибка конвертации транзакции {transaction_id}: {e}")
+                    logger.error(f"Ошибка конвертации транзакции {transaction_id}: {e}")
                     return "Конвертация невозможна"
-    logger.info(f"Транзакция {transaction_id} не найдена.")
+    logger.error(f"Транзакция {transaction_id} не найдена.")
     return "Tранзакция не найдена"
 
 
 if __name__ == "__main__":
-   transactions = get_transactions("../data/operations.json")
-   print(transaction_amount_in_rub(transactions, 939719570))
+    transactions = get_transactions("../data/operations.json")
+    print(transaction_amount_in_rub(transactions, 939719570))
