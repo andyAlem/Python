@@ -1,22 +1,39 @@
-import pandas as pd
+import csv
 import os
 
-
-def get_transactions_csv(file_path):
+def get_transaction_csv(file_path):
 
     if not os.path.isfile(file_path):
         raise FileNotFoundError(f"CSV файл '{file_path}' не найден.")
 
-    if not file_path.endswith(".csv"):
-        raise ValueError("Неверный формат файла. Ожидается CSV.")
+    if not file_path.endswith('.csv'):
+        raise ValueError("Неверный формат файла")
 
     try:
-        with open(file_path, "r", encoding="utf-8") as file:
-            df = pd.read_csv(file)
+        transaction_list = []
+        with open(file_path, mode="r", encoding="utf-8") as file:
+            reader = csv.DictReader(file, delimiter=";")
+            for row in reader:
+                transaction_list.append(row)
 
-        if df.empty:
+        if not transaction_list:
             raise ValueError("CSV файл пустой.")
-        return df.to_dict(orient="records")
 
+        return transaction_list
+
+    except csv.Error as ex:
+        raise ValueError(f"Ошибка при чтении CSV-файла: {ex}")
+    except Exception as ex:
+        raise ValueError(f"Ошибка при чтении CSV-файла: {ex}")
+
+
+if __name__ == "__main__":
+    csv_file = "../data/transactions.csv"
+
+    try:
+        transactions = get_transaction_csv(csv_file)
+        print("Транзакции из CSV файла:")
+        for transaction in transactions:
+            print(transaction)
     except Exception as e:
-        raise ValueError(f"Ошибка при чтении CSV-файла: {e}")
+        print(f"Ошибка: {e}")
