@@ -27,13 +27,13 @@ def get_transaction_csv(file_path):
         raise ValueError(f"Ошибка при чтении CSV-файла: {ex}")
 
 
-if __name__ == "__main__":
-    csv_file = "../data/transactions.csv"
-
-    try:
-        transactions = get_transaction_csv(csv_file)
-        print("Транзакции из CSV файла:")
-        for transaction in transactions:
-            print(transaction)
-    except Exception as e:
-        print(f"Ошибка: {e}")
+# if __name__ == "__main__":
+#     csv_file = "../data/transactions.csv"
+#
+#     try:
+#         transactions = get_transaction_csv(csv_file)
+#         print("Транзакции из CSV файла:")
+#         for transaction in transactions:
+#             print(transaction)
+#     except Exception as e:
+#         print(f"Ошибка: {e}")
