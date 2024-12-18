@@ -13,7 +13,7 @@ file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s: %(me
 file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
 
-def get_transaction_csv(file_path):
+def get_transactions_csv(file_path):
 
     if not os.path.isfile(file_path):
         logger.error(f"CSV файл не найден: {file_path}")
@@ -27,6 +27,16 @@ def get_transaction_csv(file_path):
         transaction_list = []
         with open(file_path, mode="r", encoding="utf-8") as file:
             reader = csv.DictReader(file, delimiter=";")
+
+            if not reader.fieldnames:
+                logger.error("CSV файл не содержит заголовков или пустой")
+                raise ValueError("CSV файл не содержит заголовков или пустой")
+
+            required_columns = {"id", "state", "date", "amount", "currency_name", "currency_code", "from", "to",
+                                "description"}
+            if not required_columns.issubset(reader.fieldnames):
+                logger.error("CSV файл имеет некорректную структуру")
+                raise ValueError("Некорректная структура CSV файла")
             for row in reader:
                 transaction_list.append(row)
 
@@ -46,12 +56,12 @@ def get_transaction_csv(file_path):
 
 
 #if __name__ == "__main__":
-#     csv_file = "../data/transactions.csv"
+#    csv_file = "../data/transactions.csv"
 #
 #    try:
-#         transactions = get_transaction_csv(csv_file)
-#         print("Транзакции из CSV файла:")
-#         for transaction in transactions:
-#             print(transaction)
-#     except Exception as e:
+#        transactions = get_transactions_csv(csv_file)
+#        print("Транзакции из CSV файла:")
+#        for transaction in transactions:
+#            print(transaction)
+#    except Exception as e:
 #         print(f"Ошибка: {e}")
