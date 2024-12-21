@@ -1003,3 +1003,39 @@ my_function is ok
 faulty_function started: 2024-12-18 11:48:39 *:(1, 0), **:{}
 faulty_function Error: division by zero. Inputs: (1, 0), {}
 faulty_function Error: division by zero. Inputs: (1, 0), {}
+my_function started: 2024-12-18 14:11:33 *:(1, 2), **:{}
+my_function is ok
+my_function is ok
+my_function started: 2024-12-18 14:11:33 *:(1, 2), **:{}
+my_function is ok
+my_function is ok
+faulty_function started: 2024-12-18 14:11:33 *:(1, 0), **:{}
+faulty_function Error: division by zero. Inputs: (1, 0), {}
+faulty_function Error: division by zero. Inputs: (1, 0), {}
+my_function started: 2024-12-18 14:11:52 *:(1, 2), **:{}
+my_function is ok
+my_function is ok
+my_function started: 2024-12-18 14:11:52 *:(1, 2), **:{}
+my_function is ok
+my_function is ok
+faulty_function started: 2024-12-18 14:11:52 *:(1, 0), **:{}
+faulty_function Error: division by zero. Inputs: (1, 0), {}
+faulty_function Error: division by zero. Inputs: (1, 0), {}
+my_function started: 2024-12-21 09:18:06 *:(1, 2), **:{}
+my_function is ok
+my_function is ok
+my_function started: 2024-12-21 09:18:06 *:(1, 2), **:{}
+my_function is ok
+my_function is ok
+faulty_function started: 2024-12-21 09:18:06 *:(1, 0), **:{}
+faulty_function Error: division by zero. Inputs: (1, 0), {}
+faulty_function Error: division by zero. Inputs: (1, 0), {}
+my_function started: 2024-12-21 09:18:22 *:(1, 2), **:{}
+my_function is ok
+my_function is ok
+my_function started: 2024-12-21 09:18:22 *:(1, 2), **:{}
+my_function is ok
+my_function is ok
+faulty_function started: 2024-12-21 09:18:22 *:(1, 0), **:{}
+faulty_function Error: division by zero. Inputs: (1, 0), {}
+faulty_function Error: division by zero. Inputs: (1, 0), {}
