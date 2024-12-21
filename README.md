@@ -30,7 +30,11 @@ poetry add --group lint flake8, black, isort, mypy
 Добавлен Генератор Log для логирования выполнения функций
 
 ## Добавлен модуль с обращением к внешнему API
-
+external_api.py
+## Добавлен модуль для считывания банковских операций из csv файлов
+transactions_csv.py
+## Добавлен модуль для считывания банковских операций из excel файлов
+transactions_excel.py
 ## Тестирование 
 Проведено тестирование трех модулей:
 masks, processing, widget
@@ -43,6 +47,8 @@ masks, processing, widget
 Добавлены тесты для нового декоратора. 
 
 Добавлено тестирование для модулей utils, external_api
+
+Добавлены тесты для модулей transactions_excel.py и transactions_csv.py
 
 ## Logging
 Добавлены логгеры для модулей utils и masks

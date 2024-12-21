@@ -1,7 +1,7 @@
-import os
-import pandas as pd
 import logging
+import os
 
+import pandas as pd
 
 os.makedirs("logs", exist_ok=True)
 
@@ -14,13 +14,14 @@ file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s: %(me
 file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
 
+
 def get_transactions_excel(file_path):
 
     if not os.path.isfile(file_path):
         logger.error(f"Excel файл '{file_path}' не найден.")
         raise FileNotFoundError(f"Excel файл '{file_path}' не найден.")
 
-    if not file_path.endswith(('.xls', '.xlsx')):
+    if not file_path.endswith((".xls", ".xlsx")):
         logger.error("Неверный формат файла")
         raise ValueError("Неверный формат файла.")
 
@@ -33,7 +34,9 @@ def get_transactions_excel(file_path):
             raise ValueError("Excel файл пустой.")
 
         logger.info(f"Файл '{file_path}' успешно прочитан. Количество записей: {len(df)}")
-        return df.to_dict(orient='records') #https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_dict.html
+        return df.to_dict(
+            orient="records"
+        )  # https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_dict.html
 
     except ValueError as ex:
         logger.error(f"Ошибка в содержимом файла Excel: {ex}")

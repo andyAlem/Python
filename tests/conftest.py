@@ -192,6 +192,7 @@ def example_csv():
 593027;CANCELED;2023-07-22T05:02:01Z;30368;Shilling;TZS;Visa 1959232722494097;Visa 6804119550473710;Перевод с карты на карту
 """
 
+
 @pytest.fixture
 def excel_data():
     return {

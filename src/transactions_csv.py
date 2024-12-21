@@ -1,6 +1,6 @@
 import csv
-import os
 import logging
+import os
 
 os.makedirs("logs", exist_ok=True)
 
@@ -13,13 +13,14 @@ file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s: %(me
 file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
 
+
 def get_transactions_csv(file_path):
 
     if not os.path.isfile(file_path):
         logger.error(f"CSV файл не найден: {file_path}")
         raise FileNotFoundError(f"CSV файл '{file_path}' не найден.")
 
-    if not file_path.endswith('.csv'):
+    if not file_path.endswith(".csv"):
         logger.error("Неверный формат файла")
         raise ValueError("Неверный формат файла")
 
@@ -32,8 +33,17 @@ def get_transactions_csv(file_path):
                 logger.error("CSV файл не содержит заголовков или пустой")
                 raise ValueError("CSV файл не содержит заголовков или пустой")
 
-            required_columns = {"id", "state", "date", "amount", "currency_name", "currency_code", "from", "to",
-                                "description"}
+            required_columns = {
+                "id",
+                "state",
+                "date",
+                "amount",
+                "currency_name",
+                "currency_code",
+                "from",
+                "to",
+                "description",
+            }
             if not required_columns.issubset(reader.fieldnames):
                 logger.error("CSV файл имеет некорректную структуру")
                 raise ValueError("Некорректная структура CSV файла")
@@ -55,7 +65,7 @@ def get_transactions_csv(file_path):
         raise ValueError(f"Ошибка при чтении CSV-файла: {ex}")
 
 
-#if __name__ == "__main__":
+# if __name__ == "__main__":
 #    csv_file = "../data/transactions.csv"
 #
 #    try:
