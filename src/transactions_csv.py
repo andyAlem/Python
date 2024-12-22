@@ -15,6 +15,7 @@ logger.addHandler(file_handler)
 
 
 def get_transactions_csv(file_path):
+    """Функция для работы с файлами csv"""
 
     if not os.path.isfile(file_path):
         logger.error(f"CSV файл не найден: {file_path}")

@@ -16,6 +16,7 @@ logger.addHandler(file_handler)
 
 
 def get_transactions_excel(file_path):
+    """Функция для работы с файлами excel"""
 
     if not os.path.isfile(file_path):
         logger.error(f"Excel файл '{file_path}' не найден.")
