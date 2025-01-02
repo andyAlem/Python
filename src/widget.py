@@ -1,5 +1,6 @@
-from src.masks import get_mask_account, get_mask_card_number
 from datetime import datetime
+
+from src.masks import get_mask_account, get_mask_card_number
 
 
 def mask_account_card(cards_accounts_data: str) -> str:
@@ -10,7 +11,6 @@ def mask_account_card(cards_accounts_data: str) -> str:
     else:
         card_type, card_number = cards_accounts_data.rsplit(maxsplit=1)
         return f"{card_type} {get_mask_card_number(card_number)}"
-
 
 
 def get_date(date: str) -> str:
@@ -24,5 +24,3 @@ def get_date(date: str) -> str:
             return date_obj.strftime("%Y-%m-%d %H:%M:%S")
         except ValueError:
             raise ValueError(f"Неверный ввод, проверьте количество символов. Получено: {date}")
-
-

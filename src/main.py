@@ -1,18 +1,20 @@
 import os
+
+from src.counter import get_counter_operations_by_description
 from src.generators import filter_by_currency
+from src.processing import filter_by_state, sort_by_date
+from src.search_operations import transactions_search
 from src.transactions_csv import get_transactions_csv
 from src.transactions_excel import get_transactions_excel
 from src.utils import get_transactions, transaction_amount_in_rub
-from src.widget import mask_account_card, get_date
-from src.processing import filter_by_state, sort_by_date
-from src.search_operations import transactions_search
-from src.counter import get_counter_operations_by_description
+from src.widget import get_date, mask_account_card
 
 JSON_FILE_PATH = "../data/operations.json"
 CSV_FILE_PATH = "../data/transactions.csv"
 EXCEL_FILE_PATH = "../data/transactions_excel.xlsx"
 
 os.makedirs("logs", exist_ok=True)
+
 
 def main():
     print("Привет! Добро пожаловать в программу работы с банковскими транзакциями.")
@@ -63,9 +65,7 @@ def main():
     if currency_filter == "да":
         filters["currency"] = "RUB"
 
-    description_filter = input(
-        "Отфильтровать список транзакций по определенному слову в описании? Да/Нет: "
-    ).lower()
+    description_filter = input("Отфильтровать список транзакций по определенному слову в описании? Да/Нет: ").lower()
     if description_filter == "да":
         word = input("Введите слово для поиска: ")
         filters["description"] = word
@@ -88,6 +88,7 @@ def main():
     if not filtered_transactions:
         print("Не найдено ни одной транзакции, подходящей под ваши условия фильтрации.")
     else:
+        print("Распечатываю итоговый список транзакций...")
         filtered_transactions = list(filtered_transactions)
         print(f"\nВсего банковских операций в выборке: {len(filtered_transactions)}")
         for transaction in filtered_transactions:
@@ -95,7 +96,7 @@ def main():
             description = transaction["description"]
             amount_in_rub = transaction_amount_in_rub(filtered_transactions, transaction["id"])
 
-            if "currency" in transaction: # Проверка на ключ, иначе выдает ошибку
+            if "currency" in transaction:  # Проверка на ключ, иначе выдает ошибку
                 currency = transaction["currency"]
             else:
                 currency = ""
@@ -110,13 +111,13 @@ def main():
 
             print(f"Сумма: {amount_in_rub} {currency}")
             print()
-
-    operation_count = input("Хотите подсчитать количество операций определенного типа? Да/Нет: ").lower()
-    if operation_count == "да":
-        description_list = input("Введите типы операций через запятую: ").split(",")
-        counter = get_counter_operations_by_description(filtered_transactions, description_list)
-        print("Распечатываю итоговый список транзакций...:")
-        print(dict(counter))
+        if filtered_transactions:
+            operation_count = input("Подсчитать количество операций определенного типа? Да/Нет: ").lower()
+            if operation_count == "да":
+                description_list = input("Введите типы операций через запятую: ").split(",")
+                counter = get_counter_operations_by_description(filtered_transactions, description_list)
+                print("Распечатываю итоговый список транзакций...:")
+                print(dict(counter))
 
 
 if __name__ == "__main__":
