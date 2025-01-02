@@ -1,4 +1,3 @@
-
 import os
 from src.generators import filter_by_currency
 from src.transactions_csv import get_transactions_csv
@@ -47,7 +46,10 @@ def main():
         return
 
     while True:
-        status = input("Введите статус, по которому необходимо выполнить фильтрацию. Доступные для фильтровки статусы: EXECUTED, CANCELED, PENDING").upper()
+        status = input(
+            "Введите статус, по которому необходимо выполнить фильтрацию. \n"
+            "Доступные для фильтровки статусы: EXECUTED, CANCELED, PENDING"
+        ).upper()
         if status in ["EXECUTED", "CANCELED", "PENDING"]:
             filtered_transactions = filter_by_state(transactions, status)
             print(f"Операции отфильтрованы по статусу '{status}'")
@@ -65,7 +67,9 @@ def main():
     if user_input_currency_filter == "да":
         filtered_transactions = filter_by_currency(filtered_transactions, "RUB")
 
-    user_input_description_filter = input("Отфильтровать список транзакций по определенному слову в описании? Да/Нет: ").lower()
+    user_input_description_filter = input(
+        "Отфильтровать список транзакций по определенному слову в описании? Да/Нет: "
+    ).lower()
     if user_input_description_filter == "да":
         word = input("Введите слово для поиска: ")
         filtered_transactions = list(transactions_search(word, filtered_transactions))
@@ -73,11 +77,23 @@ def main():
     if not filtered_transactions:
         print("Не найдено ни одной транзакции, подходящей под ваши условия фильтрации.")
     else:
+        filtered_transactions = list(filtered_transactions)
         print(f"\nВсего банковских операций в выборке: {len(filtered_transactions)}")
         for transaction in filtered_transactions:
-            print(f"{get_date(transaction['date'])} {transaction['description']}")
-            print(mask_account_card(transaction['from']))
-            print(f"Сумма: {transaction_amount_in_rub(filtered_transactions, transaction['id'])} RUB")
+            transaction_date = get_date(transaction["date"])  # Форматируем дату в нужный вид
+            description = transaction["description"]
+            amount_in_rub = transaction_amount_in_rub(filtered_transactions, transaction["id"])
+            currency = transaction["currency"]
+
+            print(f"{transaction_date} {description}")
+            if "from" in transaction and "to" in transaction:
+                print(f"{mask_account_card(transaction['from'])} -> {mask_account_card(transaction['to'])}")
+            elif "from" in transaction:
+                print(mask_account_card(transaction["from"]))
+            elif "to" in transaction:
+                print(mask_account_card(transaction["to"]))
+
+            print(f"Сумма: {amount_in_rub} {currency}")
             print()
 
     user_input_operation_count = input("Хотите подсчитать количество операций определенного типа? Да/Нет: ").lower()

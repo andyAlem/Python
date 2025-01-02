@@ -47,7 +47,7 @@ def get_transactions_excel(file_path):
         raise ValueError(f"Ошибка при чтении Excel-файла: {ex}")
 
 
-#if __name__ == "__main__":
+# if __name__ == "__main__":
 #     excel_file = "/home/andrej/Poetry_homework/Homework_2.10-1_Git/data/transactions_excel.xlsx"
 #
 #     try:
