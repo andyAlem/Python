@@ -6,9 +6,14 @@ from src.transactions_csv import get_transactions_csv
 def get_counter_operations_by_description(dictionaries, operations):
     """Функция для подсчета количества банковских операций определенного типа"""
     operations_list = []
+    operations = [op.strip().lower() for op in operations]
+
     for dictionary in dictionaries:
-        if dictionary["description"] in operations:
-            operations_list.append(dictionary["description"])
+        description = dictionary.get("description", "").lower()
+
+        if any(op in description for op in operations):
+            operations_list.append(description)
+
     return Counter(operations_list)
 
 

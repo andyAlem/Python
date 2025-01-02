@@ -1,4 +1,5 @@
 from src.masks import get_mask_account, get_mask_card_number
+from datetime import datetime
 
 
 def mask_account_card(cards_accounts_data: str) -> str:
@@ -11,9 +12,17 @@ def mask_account_card(cards_accounts_data: str) -> str:
         return f"{card_type} {get_mask_card_number(card_number)}"
 
 
-def get_date(date: str) -> str:
-    """Функция, которая изменяет дату в нужном формате"""
-    if len(date) != 26:
-        raise ValueError("Неверный ввод, проверьте количество символов")
 
-    return f"{(date[8:10])}.{(date[5:7])}.{(date[0:4])}"
+def get_date(date: str) -> str:
+    """Функция для обработки формата времени"""
+    try:
+        date_obj = datetime.strptime(date, "%Y-%m-%dT%H:%M:%S.%f")
+        return date_obj.strftime("%Y-%m-%d %H:%M:%S")
+    except ValueError:
+        try:
+            date_obj = datetime.strptime(date, "%Y-%m-%dT%H:%M:%S")
+            return date_obj.strftime("%Y-%m-%d %H:%M:%S")
+        except ValueError:
+            raise ValueError(f"Неверный ввод, проверьте количество символов. Получено: {date}")
+
+
