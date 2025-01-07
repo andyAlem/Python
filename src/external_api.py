@@ -7,7 +7,7 @@ from requests import RequestException
 load_dotenv("../.env")
 API_KEY = os.getenv("API_KEY")
 
-# функция перестала работать, добавил логи, чтобы найти ошибку ...... 100 Запросов  месяц???
+# функция перестала работать, добавил логи (убрал опять), чтобы найти ошибку ...... 100 Запросов  месяц???
 
 
 def convert_to_rub(transaction: dict):
@@ -38,13 +38,10 @@ def convert_to_rub(transaction: dict):
         except RequestException as e:
             return 0
         except ValueError as e:
-            logger.error(f"Ошибка при обработке данных API: {e}")
             return 0
         except KeyError as e:
-            logger.error(f"Отсутствуют нужные данные в ответе API: {e}")
             return 0
     else:
-        logger.warning(f"Конвертация для валюты {currency} не поддерживается.")
         return 0
 
 
