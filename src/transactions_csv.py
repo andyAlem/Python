@@ -48,12 +48,8 @@ def get_transactions_csv(file_path):
             if not required_columns.issubset(reader.fieldnames):
                 logger.error("CSV файл имеет некорректную структуру")
                 raise ValueError("Некорректная структура CSV файла")
-            for row in reader:
-                currency_name = row["currency_name"]
-                currency_code = row["currency_code"]
-                currency = f"{currency_name} ({currency_code})"
 
-                print(f"Транзакция {row['id']}: {currency} - {row['description']}")
+            for row in reader:
                 transaction_list.append(row)
 
         if not transaction_list:

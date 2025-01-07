@@ -6,7 +6,7 @@ from src.processing import filter_by_state, sort_by_date
 from src.search_operations import transactions_search
 from src.transactions_csv import get_transactions_csv
 from src.transactions_excel import get_transactions_excel
-from src.utils import get_transactions, transaction_amount_in_rub
+from src.utils import get_transactions
 from src.widget import get_date, mask_account_card
 
 JSON_FILE_PATH = "../data/operations.json"
@@ -17,6 +17,7 @@ os.makedirs("logs", exist_ok=True)
 
 
 def main():
+    """Функция выводит банковский транзакции после запроса пользователя"""
     print("Привет! Добро пожаловать в программу работы с банковскими транзакциями.")
     print("Выберите необходимый пункт меню:")
     print("1. Получить информацию о транзакциях из JSON-файла")
@@ -73,51 +74,63 @@ def main():
     filtered_transactions = transactions
 
     if "status" in filters:
+        print(f"Фильтрую по статусу: {filters['status']}")
         filtered_transactions = filter_by_state(filtered_transactions, filters["status"])
 
     if "sort" in filters:
+        print(f"Сортирую по дате: {filters['sort']}")
         reverse = filters["sort"] == "по убыванию"
         filtered_transactions = sort_by_date(filtered_transactions, reverse)
 
     if "currency" in filters:
+        print(f"Фильтрую по валюте: {filters['currency']}")
         filtered_transactions = filter_by_currency(filtered_transactions, filters["currency"])
 
     if "description" in filters:
+        print(f"Фильтрую по слову в описании: {filters['description']}")
         filtered_transactions = list(transactions_search(filters["description"], filtered_transactions))
 
     if not filtered_transactions:
         print("Не найдено ни одной транзакции, подходящей под ваши условия фильтрации.")
-    else:
-        print("Распечатываю итоговый список транзакций...")
-        filtered_transactions = list(filtered_transactions)
-        print(f"\nВсего банковских операций в выборке: {len(filtered_transactions)}")
-        for transaction in filtered_transactions:
-            transaction_date = get_date(transaction["date"])
-            description = transaction["description"]
-            amount_in_rub = transaction_amount_in_rub(filtered_transactions, transaction["id"])
+        return
 
-            if "currency" in transaction:  # Проверка на ключ, иначе выдает ошибку
-                currency = transaction["currency"]
+    print("Распечатываю итоговый список транзакций...")
+    filtered_transactions = list(filtered_transactions)
+    print(f"\nВсего банковских операций в выборке: {len(filtered_transactions)}")
+
+    for transaction in filtered_transactions:
+        transaction_date = get_date(transaction["date"])
+        description = transaction["description"]
+
+        currency = transaction.get("currency_code", "неизвестно")
+        amount = transaction.get("amount", None)
+
+        if amount is None or amount == "Ввод недействительный":
+            amount_display = "Данные отсутствуют"
+            currency_display = "неизвестно"
+        else:
+            amount_display = str(int(amount))  # Преобразуем сумму в целое число
+            if currency != "неизвестно":
+                currency_display = currency
             else:
-                currency = ""
+                currency_display = "неизвестно"
 
-            print(f"{transaction_date} {description}")
-            if "from" in transaction and "to" in transaction:
-                print(f"{mask_account_card(transaction['from'])} -> {mask_account_card(transaction['to'])}")
-            elif "from" in transaction:
-                print(mask_account_card(transaction["from"]))
-            elif "to" in transaction:
-                print(mask_account_card(transaction["to"]))
+        print(f"{transaction_date} {description}")
+        if "from" in transaction and "to" in transaction:
+            print(f"{mask_account_card(transaction['from'])} -> {mask_account_card(transaction['to'])}")
+        elif "from" in transaction:
+            print(mask_account_card(transaction["from"]))
+        elif "to" in transaction:
+            print(mask_account_card(transaction["to"]))
 
-            print(f"Сумма: {amount_in_rub} {currency}")
-            print()
-        if filtered_transactions:
-            operation_count = input("Подсчитать количество операций определенного типа? Да/Нет: ").lower()
-            if operation_count == "да":
-                description_list = input("Введите типы операций через запятую: ").split(",")
-                counter = get_counter_operations_by_description(filtered_transactions, description_list)
-                print("Распечатываю итоговый список транзакций...:")
-                print(dict(counter))
+        print(f"Сумма: {amount_display} {currency_display}\n")
+
+    operation_count = input("Подсчитать количество операций определенного типа? Да/Нет: ").lower()
+    if operation_count == "да":
+        description_list = input("Введите типы операций через запятую: ").split(",")
+        counter = get_counter_operations_by_description(filtered_transactions, description_list)
+        print("Распечатываю итоговый список транзакций...:")
+        print(dict(counter))
 
 
 if __name__ == "__main__":
