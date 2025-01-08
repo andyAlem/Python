@@ -53,7 +53,7 @@ def get_transactions_csv(file_path):
                 transaction_list.append(row)
 
         if not transaction_list:
-            logger.warning(f"CSV файл пустой")
+            logger.warning("CSV файл пустой")
             raise ValueError("CSV файл пустой.")
 
         logger.info(f"Успешно считано {len(transaction_list)} транзакций")
@@ -63,7 +63,7 @@ def get_transactions_csv(file_path):
         logger.error(f"Ошибка при чтении CSV-файла: {ex}")
         raise ValueError(f"Ошибка при чтении CSV-файла: {ex}")
     except Exception as ex:
-        logger.exception(f"Неизвестная ошибка при чтении CSV-файла")
+        logger.exception("Неизвестная ошибка при чтении CSV-файла")
         raise ValueError(f"Ошибка при чтении CSV-файла: {ex}")
 
 

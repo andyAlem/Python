@@ -1,7 +1,6 @@
 import os
 
 from src.counter import get_counter_operations_by_description
-from src.generators import filter_by_currency
 from src.processing import filter_by_state, sort_by_date
 from src.search_operations import transactions_search
 from src.transactions_csv import get_transactions_csv
@@ -17,7 +16,6 @@ os.makedirs("logs", exist_ok=True)
 
 
 def main():
-    """Функция выводит банковский транзакции после запроса пользователя"""
     print("Привет! Добро пожаловать в программу работы с банковскими транзакциями.")
     print("Выберите необходимый пункт меню:")
     print("1. Получить информацию о транзакциях из JSON-файла")
@@ -82,7 +80,17 @@ def main():
 
     if "currency" in filters:
         print(f"Фильтрую по валюте: {filters['currency']}")
-        filtered_transactions = filter_by_currency(filtered_transactions, filters["currency"])
+        filtered_transactions = [
+            transaction
+            for transaction in filtered_transactions
+            if (
+                (
+                    "operationAmount" in transaction
+                    and transaction["operationAmount"]["currency"]["code"] == filters["currency"]
+                )
+                or ("currency_code" in transaction and transaction["currency_code"] == filters["currency"])
+            )
+        ]
 
     if "description" in filters:
         print(f"Фильтрую по слову в описании: {filters['description']}")
@@ -100,31 +108,16 @@ def main():
         transaction_date = get_date(transaction["date"])
         description = transaction["description"]
 
-        # JSON!
         if "operationAmount" in transaction:
             amount = transaction.get("operationAmount", {}).get("amount")
             currency = transaction.get("operationAmount", {}).get("currency", {}).get("code", "неизвестно")
-            if (
-                not amount
-                or (isinstance(amount, str) and not amount.replace(".", "", 1).isdigit())
-                or (isinstance(amount, float) and not amount.is_integer())
-            ):
-                amount_display = "Данные отсутствуют в файле"
-            else:
-                amount_display = str(amount)
-            # CSV EXCEL!
+            amount_display = amount
         else:
             amount = transaction.get("amount")
             currency = transaction.get("currency_code", "неизвестно")
-            if not amount or (isinstance(amount, str) and not amount.replace(".", "", 1).isdigit()):
-                amount_display = "Данные отсутствуют в файле"
-            else:
-                amount_display = str(int(float(amount)))
+            amount_display = str(int(float(amount))) if amount else "Данные отсутствуют в файле"
 
-        if currency == "неизвестно" or currency == "":
-            currency_display = "неизвестно"
-        else:
-            currency_display = currency
+        currency_display = currency if currency else "неизвестно"
 
         print(f"{transaction_date} {description}")
         if "from" in transaction and "to" in transaction:

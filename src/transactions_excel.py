@@ -27,11 +27,11 @@ def get_transactions_excel(file_path):
         raise ValueError("Неверный формат файла.")
 
     try:
-        logger.info(f"Чтение транзакций Excel")
+        logger.info("Чтение транзакций Excel")
         df = pd.read_excel(file_path)
 
         if df.empty:
-            logger.info(f"Файл пустой")
+            logger.info("Файл пустой")
             raise ValueError("Excel файл пустой.")
 
         logger.info(f"Файл '{file_path}' успешно прочитан. Количество записей: {len(df)}")

@@ -1,10 +1,6 @@
-import json
-import os
 from unittest.mock import mock_open, patch
 
-import pytest
 
-from src.external_api import convert_to_rub
 from src.utils import get_transactions, transaction_amount_in_rub
 
 
@@ -59,7 +55,7 @@ def test_transaction_amount_in_rub_transaction_not_found(transactions_for_test):
 
 
 @patch("src.external_api.convert_to_rub", side_effect=Exception("API Error"))
-def test_transaction_amount_in_rub_conversion_error(mock_convert_to_rub, transactions_for_test):
+def test_transaction_amount_in_rub_conversion_error_api(mock_convert_to_rub, transactions_for_test):
     """Тест на ошибку API"""
     transactions = transactions_for_test
     result = transaction_amount_in_rub(transactions, 41428829)
@@ -80,7 +76,7 @@ def test_transaction_amount_in_rub_with_usd_currency(mock_convert_to_rub, transa
     """Тестируем функцию на работу с валютой USD"""
     transactions = transactions_for_test
 
-    print(f"Testing transaction with ID 41428829:")
+    print("Testing transaction with ID 41428829:")
     print(f"Transactions: {transactions}")
 
     result = transaction_amount_in_rub(transactions, 41428829)

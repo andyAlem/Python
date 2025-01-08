@@ -35,11 +35,11 @@ def convert_to_rub(transaction: dict):
                 return json_result["result"]
             else:
                 return 0
-        except RequestException as e:
+        except RequestException:
             return 0
-        except ValueError as e:
+        except ValueError:
             return 0
-        except KeyError as e:
+        except KeyError:
             return 0
     else:
         return 0
