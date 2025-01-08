@@ -1,6 +1,6 @@
 from datetime import datetime
 
-#from src.masks import get_mask_account, get_mask_card_number
+# from src.masks import get_mask_account, get_mask_card_number
 
 
 def mask_account_card(cards_accounts_data) -> str:
@@ -9,10 +9,10 @@ def mask_account_card(cards_accounts_data) -> str:
         return "Данные отсутствуют"
 
     if not isinstance(cards_accounts_data, str):
-        return "Некорректный формат данных"
+        return "Данные в файле отсутствуют"
 
     try:
-        cards_accounts_data = cards_accounts_data.replace("Счёт", "Счет") # для теста и функционала
+        cards_accounts_data = cards_accounts_data.replace("Счёт", "Счет")  # для теста и функционала
         card_type, card_number = cards_accounts_data.rsplit(maxsplit=1)
 
         if "Счет" in card_type or "Счёт" in card_type:

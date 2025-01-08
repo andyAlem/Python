@@ -1,6 +1,6 @@
 from collections import Counter
 
-#from src.transactions_csv import get_transactions_csv
+# from src.transactions_csv import get_transactions_csv
 
 
 def get_counter_operations_by_description(dictionaries, operations):

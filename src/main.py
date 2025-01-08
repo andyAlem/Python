@@ -47,10 +47,8 @@ def main():
     filters = {}
 
     while True:
-        status = input(
-            "Введите статус для фильтрации (EXECUTED, CANCELED, PENDING), или оставьте пустым для пропуска: "
-        ).upper()
-        if status in ["EXECUTED", "CANCELED", "PENDING", ""]:
+        status = input("Введите статус для фильтрации (EXECUTED, CANCELED, PENDING): ").upper()
+        if status in ["EXECUTED", "CANCELED", "PENDING"]:
             if status:
                 filters["status"] = status
             break
@@ -102,18 +100,31 @@ def main():
         transaction_date = get_date(transaction["date"])
         description = transaction["description"]
 
-        currency = transaction.get("currency_code", "неизвестно")
-        amount = transaction.get("amount", None)
+        # JSON!
+        if "operationAmount" in transaction:
+            amount = transaction.get("operationAmount", {}).get("amount")
+            currency = transaction.get("operationAmount", {}).get("currency", {}).get("code", "неизвестно")
+            if (
+                not amount
+                or (isinstance(amount, str) and not amount.replace(".", "", 1).isdigit())
+                or (isinstance(amount, float) and not amount.is_integer())
+            ):
+                amount_display = "Данные отсутствуют в файле"
+            else:
+                amount_display = str(amount)
+            # CSV EXCEL!
+        else:
+            amount = transaction.get("amount")
+            currency = transaction.get("currency_code", "неизвестно")
+            if not amount or (isinstance(amount, str) and not amount.replace(".", "", 1).isdigit()):
+                amount_display = "Данные отсутствуют в файле"
+            else:
+                amount_display = str(int(float(amount)))
 
-        if amount is None or amount == "Ввод недействительный":
-            amount_display = "Данные отсутствуют"
+        if currency == "неизвестно" or currency == "":
             currency_display = "неизвестно"
         else:
-            amount_display = str(int(amount))  # Преобразуем сумму в целое число
-            if currency != "неизвестно":
-                currency_display = currency
-            else:
-                currency_display = "неизвестно"
+            currency_display = currency
 
         print(f"{transaction_date} {description}")
         if "from" in transaction and "to" in transaction:
